@@ -13,18 +13,39 @@ class Cell:
         self._x2 = x2
         self._y2 = y2
         self._win = window
+        self.visited = False
 
-    def draw(self):
+    def draw(self, x1, y1, x2, y2):
         if self._win is None:
             return
+        self._x1 = x1
+        self._x2 = x2
+        self._y1 = y1
+        self._y2 = y2
         if self.has_left_wall:
-            Line(Point(self._x1,self._y1), Point(self._x1, self._y2)).draw(self._win.canvas, "black")
+            line = Line(Point(x1, y1), Point(x1, y2))
+            self._win.draw_line(line)
+        else:
+            line = Line(Point(x1, y1), Point(x1, y2))
+            self._win.draw_line(line, "white")
         if self.has_right_wall:
-            Line(Point(self._x2,self._y1), Point(self._x2, self._y2)).draw(self._win.canvas, "black")
+            line = Line(Point(x2, y1), Point(x2, y2))
+            self._win.draw_line(line)
+        else:
+            line = Line(Point(x2, y1), Point(x2, y2))
+            self._win.draw_line(line, "white")
         if self.has_top_wall:
-            Line(Point(self._x1,self._y1), Point(self._x2, self._y1)).draw(self._win.canvas, "black")
+            line = Line(Point(x1, y1), Point(x2, y1))
+            self._win.draw_line(line)
+        else:
+            line = Line(Point(x1, y1), Point(x2, y1))
+            self._win.draw_line(line, "white")
         if self.has_bottom_wall:
-            Line(Point(self._x1,self._y2), Point(self._x2, self._y2)).draw(self._win.canvas, "black")
+            line = Line(Point(x1, y2), Point(x2, y2))
+            self._win.draw_line(line)
+        else:
+            line = Line(Point(x1, y2), Point(x2, y2))
+            self._win.draw_line(line, "white")
 
     def draw_move(self, to_cell: 'Cell', undo=False):
         if self._win is None:
